@@ -16,7 +16,7 @@ In the SalesHub application, a [Kendo Treeview](http://demos.kendoui.com/web/tre
 the first character in their name. So the basic structure of the Treeview is: `Selling Company -> Customer Group -> Customer Name`.
 
 When a Customer is selected in the [Kendo Treeview](http://demos.kendoui.com/web/treeview/index.html) the Order's grid is updated to
-display only the Order's for the selected Customer. If you would like to learn how the Order's grid is updated depending on the selected
+display only the Orders for the selected Customer. If you would like to learn how the Order's grid is updated depending on the selected
 Customer, please read [Filtering Order's Server-Side](kendo-saleshub-filtering-orders-server-side).
 
 The Customer Treeview is located in **Views/Home/Index.cshtml**
@@ -61,7 +61,7 @@ To generate the Customer Treeview we use the following Razor code:
         ))
         .Events(events => events.Select("window.SalesHub.CustomerTreeView_Select")))
 
-Let's step through this code and describe what it does.
+Let's walk step-by-step through this code and describe what it does.
 
     @using Kendo.Mvc.UI
 

@@ -55,16 +55,15 @@ the edit page and contains the Id of the order to edit.
         .ToolBar(toolbar => toolbar.Template("<a id='createOrderButton' class='k-button k-button-icontext k-grid-add' href='#'>Create order</a>"))
 
 Next we supply a template for the Toolbar of the grid. This template contains an &lt;a&gt; that
-is used to redirect the user to the page for creating an order. Redirect the user to the page for
-creating an Order is handled by some custom Javascript which can be found in **Scripts/home.js**.
-This Javascript will be described later on this article.
+is used to redirect the user to the page for creating an order. This is handled by some custom Javascript which can be found in **Scripts/home.js**.
+This Javascript will be described later in this article.
 
         .Filterable()
         .Selectable(settings => settings.Mode(GridSelectionMode.Single))
         .Pageable(builder => builder.PageSizes(new[] { 20, 30 }))
 
 Here we tell the grid that columns can be filtered by the user. We also make it so that users can
-select an entire row and we setup some page sizes that the user can select from.
+select an entire row, and we set up some page sizes that the user can select from.
 
         .DataSource(dataSource => dataSource
             .Ajax()
@@ -74,15 +73,15 @@ select an entire row and we setup some page sizes that the user can select from.
             .PageSize(20)
         ))
 
-Finally we setup the DataSource that the grid will us. Since we'll be getting our data from a remote
-service we call the `Ajax()` function. Next we tell it what URL to hit when it needs to read data
-from the server. We also tell it that it needs to make a GET request when it queries the server.
+Finally we set up the DataSource that the grid will use. We'll be getting our data from a remote
+service we call the `Ajax()` function. We tell it what URL to hit when it needs to read data
+from the server, then tell it that it needs to make a GET request when it queries the server.
 We also need to tell the DataSource what property on model is the Id (in this case it's "OrderID").
 The last two function calls tell the DataSource that the server will handle filtering and that we
 only want to get 20 orders back from the server.
 
-Earlier we setup the "Create an Order" button in the Grids toolbar, but it doesn't actually do
-anything. So lets wire that up to do something useful.
+Earlier we set up the "Create an Order" button in the Grids toolbar, but it doesn't actually do
+anything. So let's wire that up to do something useful.
 
 Since we'll be redirecting the user page for creating an Order, we'll need the URL to that page. We
 don't want to hardcode the URL to that page in our Javascript, since it could change later, so lets
@@ -93,7 +92,7 @@ inject the URL we need into a Javascript variable using Razor. This can be found
     </script>
 
 Now that we have the URL in a variable that we can access from our Javascript function, we can
-setup the code which actually redirects the user to that page when the "Create order" button
+set up the code which actually redirects the user to that page when the "Create order" button
 is clicked.
 
     $("#createOrderButton").on("click", function() {

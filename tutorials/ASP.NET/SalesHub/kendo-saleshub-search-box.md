@@ -12,7 +12,7 @@ publish: true
 The Search Box in SalesHub allows users to search for Orders based on their Order Number. It is
 implemented using a [Kendo AutoComplete](http://demos.kendoui.com/web/autocomplete/index.html)
 that queries a remote service for search results based on what has been typed into the search
-box. The search results displayed in the dropdown are limited to the first 20 results, so if
+box. The search results displayed in the dropdown are limited to the first 20 results, so
 the user can press enter and it will open a [Kendo Window](http://demos.kendoui.com/web/window/index.html)
 that will display all of the search results.
 
@@ -49,7 +49,7 @@ have been typed into the textbox.
         .ServerFiltering(true)
     )
 
-We setup the DataSource for the AutoComplete to call our search method on the **SearchController** and we tell it do server-side
+We set up the DataSource for the AutoComplete to call our search method on the **SearchController** and we tell it do server-side
 filtering when it queries for data.
 
     .DataTextField("OrderNumber")
@@ -87,7 +87,7 @@ Now that we have the URL we need, we can declare our event handler.
     };
 
 Our event handler takes one parameter (`e`) which is an event object that the AutoComplete passes in. This event object has a
-property called `item` which is a jQuery object that points to the HTML element that the user selected. We use this to find the 
+property called `item`, which is a jQuery object that points to the HTML element that the user selected. We use this to find the 
 &lt;span&gt; that we specified in our Template for the AutoComplete and from there we get the "OrderId" off of the **data-order-id**
 attribute we declared on the span.
 
@@ -125,7 +125,7 @@ To do this we create a [Kendo Window](http://demos.kendoui.com/web/window/index.
         </text>)
         .Events(e => e.Open("window.SalesHub.SearchResultWindow_Open")))
 
-As side from the standard boiler plate declarations for a Kendo widget using the Kendo UI MVC extensions, lets break down
+In addition to the standard boilerplate declarations for a Kendo widget using the Kendo UI MVC extensions, let's break down
 what this window declaration does.
 
     .Title("Search Results")
@@ -135,7 +135,7 @@ what this window declaration does.
     .Width(500)
 
 Here we set the Title of the window, tell it we want it to be a modal dialog, and that we don't want it to be visible when
-the page first loads. We also give specify the dimensions of the window.
+the page first loads. We also specify the dimensions of the window.
 
     .Content(@<text>
         @(Html.Kendo().Grid<OrderSearchResult>()
@@ -165,7 +165,7 @@ This will be useful later when we need to redirect the user to the order that th
 Finally we supply an event handler for the windows open event. We need this event handler so that we can tell the grid
 what search results it needs to display when the window is opened.
 
-Now that we have the window setup, we need to wire up some event handlers so that we open it when the user presses
+Now that we have the window set up, we need to wire up some event handlers so that it opens when the user presses
 the enter key inside of the search box.
 
     $(document).ready(function () {
@@ -178,8 +178,8 @@ the enter key inside of the search box.
         });
     });
 
-To do this, we wait for the document to load then we find the search textbox on the page using a jQuery selector. Once we find
-the textbox we subscribe to its **keyup** event. Since we only want to open the window when the user presses the enter key, we
+To do this, we wait for the document to load, then we find the search textbox on the page using a jQuery selector. Once we find
+the textbox, we subscribe to its **keyup** event. Since we only want to open the window when the user presses the enter key, we
 check to see which key was pressed. If it was the enter key (`13`), we find the window that we create earlier and get the
 [Kendo Window](http://demos.kendoui.com/web/window/index.html) object off of it. Using the window object, we tell the window to
 `center` itself and to `open`.
@@ -195,10 +195,10 @@ Now that we've told the window to open, our event handler for the open event com
     };
 
 Since we only want to display search results based on what the user has typed into the search box, we get the filter that's being
-applied to the AutoComplete's datasource and set it to the grids datasource. Doing this causes the grids datasource to hit our
-search service using the same filter as what the AutoComplete used.
+applied to the AutoComplete's datasource and set it to the grids datasource. Doing this causes the grid's datasource to hit our
+search service using the same filter as the AutoComplete.
 
-Now that we've updated the grid to only display search results based on what the user had typed into the search box, we now need
+Now that we've updated the grid to only display search results based on what the user had typed into the search box, we need
 a way of redirecting the user to an order if they select one in the grid. This is where our event handler for the `change` event
 of the grid comes into play.
 
@@ -209,7 +209,7 @@ of the grid comes into play.
     };
 
 The grid sets the `this` context of the function to itself when it calls our event handler. This means that we can access all of
-the grids properties through the `this` variable. To get the selected item in the grid we call the `select` function on it. The
+the grids properties through the `this` variable. To get the selected item in the grid, we call the `select` function on it. The
 `select` function returns an array of selected elements, but since our grid only supports single item selection we just get the
 first element in the array. We then pass the selected element to the `dataItem` function of the grid, which returns the corresponding
 **OrderSearchResult** which we use to get the id of the order. Once we have the id of the order we can redirect the user to

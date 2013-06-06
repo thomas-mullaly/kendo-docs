@@ -9,7 +9,7 @@ publish: true
 
 ![kendo-saleshub-customer-treeview-and-grid-screenshot](images/kendo-saleshub-customer-treeview-and-grid-screenshot.png)
 
-Since **SalesHub** contains a lot of orders for various customers it would not be very efficient for **all**
+Since **SalesHub** contains a lot of orders for various customers, it would not be very efficient for **all**
 of the orders to be returned when the orders grid renders. To reduce wait times and cut back on the amount of bandwidth
 that is used when retrieving orders from the server, the [Kendo DataSource](http://demos.kendoui.com/web/datasource/index.html)
 that the orders grid uses has been configured to do server-side operations.
@@ -31,7 +31,7 @@ the DataSource is configured:
 
 The part we care about in this DataSource configuration is the `ServerOperation(true)` function call. Passing `true` to this
 function causes the resulting client-side Kendo DataSource to include any [filters](/api/framework/datasource#methods-filter)
-that are being applied to it, in the request that it sends to the server. In a to passing along any filters that need to be
+that are being applied to it in the request that it sends to the server. In passing along any filters that need to be
 applied, the DataSource will also pass up any paging information (if it has been configured for it) to the server in its
 request.
 
@@ -41,7 +41,7 @@ The full declaration for orders grid can be found in **Views/Home/Index.cshtml**
 
 To make supporting server-side filtering easier the Kendo UI MVC extensions expose a few classes and functions which do all
 of the hard work for you. The extensions provide **DataSourceRequest**, **DataSourceResponse**, and **ToDataSourceResult**
-to help with server-side filtering. Lets look at code in the **Api/CustomerOrdersController.cs** to see how these help us.
+to help with server-side filtering. Let's look at code in the **Api/CustomerOrdersController.cs** to see how these help us.
 
     using System.Linq;
     using System.Web.Mvc;
@@ -81,7 +81,7 @@ to help with server-side filtering. Lets look at code in the **Api/CustomerOrder
         }
     }
 
-As you can see the implementation for the CustomerOrdersController isn't very big and this is because the Kendo UI MVC extensions
+As you can see, the implementation for the CustomerOrdersController isn't very big and this is because the Kendo UI MVC extensions
 greatly reduce the amount of code you have to write to support filtering. Lets step through this code and see what everything does.
 
     using Kendo.Mvc.Extensions;
@@ -93,13 +93,13 @@ request helpers that we'll be using later.
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
 
 This isn't Kendo UI related, but this attribute is useful when trying to prevent some browsers (ex. IE) from caching AJAX calls to our service.
-We want this on our controller because the underlying data could change at anytime and we don't want old data to be displayed to users.
+We want this on our controller because the underlying data could change at any time, and we don't want old data to be displayed to users.
 
     public JsonResult GetOrdersForCustomer([DataSourceRequest] DataSourceRequest request)
 
 In this code snippet we declare an MVC Action for our CustomerOrdersController. Since it's a data service, the return value
 of the function is a `JsonResult`. As we'll be receiving filtering data from the client-side DataSource we need to take
-a **DataSourceRequest** object as a parameter. The `[DataSourceRequest]` attribute which is applied to the parameter is used
+a **DataSourceRequest** object as a parameter. The `[DataSourceRequest]` attribute, which is applied to the parameter, is used
 by the MVC framework when it binds data from the request to parameters that the Action takes.
 
     IQueryable<Order> orders = _orderRepository.GetAllOrders();
@@ -161,7 +161,7 @@ is where we declare that event handler (`window.SalesHub.CustomerTreeView_Select
     };
 
 The event handler has one paramater `e`. This is the event object that we get from the Kendo
-Treeview when a new node is selected in it and it contains information about which node was
+Treeview when a new node is selected in it; it contains information about which node was
 selected.
 
     var node = $(e.node);
@@ -179,7 +179,7 @@ The `dataItem` we get from the Kendo Treeview is an object that the Kendo Treevi
 
 After we've gotten the dataItem and jQuery object for node we need to see if
 the node that was selected was a actually a Customer (we don't care about the grouping or
-selling company nodes). To do this we check if the dataItem has any children, if it doesn't,
+selling company nodes). To do this we check if the dataItem has any children; if it doesn't,
 that means a Customer was selected.
 
 We then call the `updateGridCustomerFilter` function, this takes a customerId as a parameter.
@@ -204,7 +204,7 @@ to it.
 
     { field: "CustomerId", operator: "eq", value: customerId }
 
-The filter that we add to the DataSource says that we want to the DataSource to only have items
+The filter that we add to the DataSource says that we want the DataSource to only have items
 which have a `CustomerId` equal to the customerId that we got as a parameter to the function.
 Adding this filter causes the DataSource to send a request to the server asking for only Orders
-that belong to the speciifed Customer.
+that belong to the specified Customer.

@@ -9,28 +9,28 @@ publish: true
 
 ![kendo-saleshub-order-details-edit-dialog-screenshot](images/kendo-saleshub-order-details-edit-dialog-screenshot.png)
 
-The order details grid provides
+The Order Details grid provides
 
 ## How to Setup the Custom Order Detail Editor
 
 Since the MVC extensions for the [Kendo Grid](http://demos.kendoui.com/web/grid/index.html) make use of MVC's
 [EditorForModel](http://msdn.microsoft.com/en-us/library/system.web.mvc.html.editorextensions.editorformodel.aspx)
 we're able to customize the editor that the grid uses by creating an Editor template. To
-setup the custom editor for the grid we first have to create a partial Razor view with the same name as the type that
-we bound against the grid. If we look at how we setup the grid we can see how this works.
+set up the custom editor for the grid, we first have to create a partial Razor view with the same name as the type that
+we bound against the grid. If we look at how we set up the grid we can see how this works.
 
     @(Html.Kendo().Grid<OrderDetailViewModel>()
         .Name("orderDetailsGrid")
 
 Since we declared the grid to bind against **OrderDetailViewModel**'s this means we need to a create a partial view
-with called **OrderDetailViewModel.cshtml**. Once we've created this partial view it needs to be moved into the
+ called **OrderDetailViewModel.cshtml**. Once we've created this partial view it needs to be moved into the
 **Views/Shared/EditorTemplates**. The reason for this is that MVC will look in the **EditorTemplates** folder
 when it's trying to resolve an editor for a model.
 
-The contents of **OrderDetailViewModel.cshtml** contains inputs for the fields that we would like users to be able
+The contents of **OrderDetailViewModel.cshtml** include inputs for the fields that we would like users to be able
 to edit when the **PopUp** editor for the grid is open. We'll go over a few key aspects of the OrderDetailViewModel
 editor template, which can be found in **Views/Shared/EditorTemplates/OrderDetailViewModel.cshtml**. Since we've
-already gone over how to setup most of the kendo widgets that this template uses, we'll only cover the important
+already gone over how to set up most of the Kendo widgets that this template uses, we'll only cover the important
 parts of the template.
 
     @model OrderDetailViewModel
@@ -63,23 +63,23 @@ against its data until the grid opens its editor. This means we can't use any of
 model because the partial view is rendered server-side and those values don't exist yet. Another reason is because
 we're getting the **OrderDetailViewModel**'s back from a remote service call, which means every **OrderDetailViewModel**
 that we get back from the server would have to have all of the possible Origins stored in them. This would result in a
-lot of duplicate/unneeded data being sent back to the client. To avoid all of this, we store the origins in the
+lot of duplicate/unneeded data being sent back to the client. To avoid all of this, we store the Origins in the
 **ViewData**.
 
 ## Auto Updating Fields Based on Value Changes
 
-There are a couple properties on an order detail which are interelated and when one changes we need to update the
+There are a couple properties on an order detail which are interrelated, and when one changes we need to update the
 others.
 
-The related fields are:
+The related fields are: 
 
-* **NetWeight** - When the net weight is changed we update the units count.
+* **NetWeight** - When the net weight is changed, we update the units count.
 
-* **Units** - When the number of units is changed we recalculate the net weight.
+* **Units** - When the number of units is changed, we recalculate the net weight.
 
-* **UnitWeight** - When the unit weight is updated we recalculate the net weight.
+* **UnitWeight** - When the unit weight is updated, we recalculate the net weight.
 
-In order to update these values we need to setup event handlers for the **Change** event of the widgets.
+In order to update these values we need to set up event handlers for the **Change** event of the widgets.
 
     @Html.Kendo().NumericTextBoxFor(model => model.NetWeight).Decimals(2).Events(events => events.Change("window.SalesHub.OrderDetailsEdit_NetWeight_Change"))
 
@@ -107,12 +107,12 @@ After setting up the event handlers we need to actually handle the changes event
         orderDetails.set("NetWeight", orderDetails.UnitWeight * orderDetails.Units);
     };
 
-Each of the event handlers has the same basic set of operations. They find the order details grid on the
-page and get the **kendoGrid** object from it. Once they have the grid they access the order detail which
-is currently being edited by the user. To do this easily we access the grids **editable** property which
+Each of the event handlers has the same basic set of operations--they find the order details grid on the
+page and get the **kendoGrid** object from it. Once they have the grid, they access the order detail which
+is currently being edited by the user. To do this easily we access the grid's **editable** property, which
 contains an **option** property that has the order detail which is currently being edited. After we get
-the order detail we then compute and update the related value using the **set**. The reason we use the
-**set** function is because the order detail is bound to the dialog using Kendo's MVVM framework and we
+the order detail, we then compute and update the related value using the **set**. The reason we use the
+**set** function is because the order detail is bound to the dialog using Kendo's MVVM framework, and we
 want the value update to be visible to the user.
 
 ## Adding Server-side Validation
@@ -156,11 +156,11 @@ the order it's a part of. If it does pre-date the order, then we add a model err
 We only want to update the Order detail in the database if there aren't any **ModelState** errors, so we
 check to make sure the **ModelState** is valid.
 
-The datasource for the grid also expects the order detail which is being updated, to be returned in the
+The datasource for the grid also expects the order detail which is being updated to be returned in the
 response from the server. This is why we create an array which only contains the **OrderDetailViewModel**
 that we got from the datasource.
 
-Using this array we convert it to a `Queryable` and use the `ToDataSourceResult` extension method that is
+Using this array, we convert it to a `Queryable` and use the `ToDataSourceResult` extension method that is
 provided by the Kendo UI MVC extensions. This extension provides a few different overloads, but each one
 requires you to at least pass in a **DataSourceRequest**. One of the overloads for this function allows you
 to pass in the **ModelState** of your controller and it will use this to generate errors that it sends
@@ -196,14 +196,14 @@ In **Views/Order/_Order.cshtml** we also declared a
         # } #
     </script>
 
-This template is what is used to display the errors from server. The template takes an object
+This template is used to display the errors from server. The template takes an object
 with two properties: **field** and **messages**. The **field** property is the name of the
 property on the **OrderDetailViewModel** that the errors apply to. The **messages** property
 contains all of the error messages associated with the property. All this template does is
 generate an &lt;li&gt; with the **field** as text and a nested &lt;ul&gt; that contains the
 error messages for the **field**.
 
-Now lets see how the event handler is setup:
+Now let's see how the event handler is set up:
 
     window.SalesHub.OrderDetails_Error = function (args) {
         if (args.errors) {
@@ -222,7 +222,7 @@ Now lets see how the event handler is setup:
 
 The event handler is passed an object (**args**) which contains the errors that were received from the server.
 Using **args** we check to see if there are any errors that we need to process. The reason we check this is because
-a datasource request can fail for more reasons then just because there were validation errors server-side (ex. network
+a datasource request can fail for reasons other than validation errors server-side (ex. network
 related issues).
 
 Next we find the order details grid on the page using jQuery and we get the **kendoGrid** object off of it. The next
@@ -232,8 +232,8 @@ that we can call later (with parameters) and it will render the template against
 resulting html.
 
 Now that we have our template function we need to setup a one time event handler for the **dataBinding** event on
-the grid. The reason for this is that we need to prevent the grid from rebinding against the data which failed
-the server-side validation. To prevent the binding from occuring we call `preventDefault()` on the event object
+the grid. We do this to prevent the grid from rebinding against the data which failed
+the server-side validation. To prevent the binding from occurring, we call `preventDefault()` on the event object
 that we get as a parameter. To display the errors inside of the editor dialog we use
 [jQuery's each](http://api.jquery.com/jQuery.each/) function to iterate over each property in the **errors**
 object. Using the **validationTemplate** function, we construct a new object which has the properties that

@@ -8,22 +8,22 @@ ordinal: 0
 
 # Creating and Editing Orders - SalesHub
 
-Since there is a lot in common between the create and edit views for an Order, well describe how
+Since there are many similarities between the create and edit views for an Order, we'll discuss how
 both of them work in this article.
 
 ![kendo-saleshub-order-edit-screenshot](images/kendo-saleshub-order-edit-screenshot.png)
 
 ## Setting up the Partial View for an Order
 
-Since the contents of the Edit and New view for Orders are nearly the same content wise, we created
-a MVC partial view, which contains the markup that is common between the views. This partial view
+Since the contents of the Edit and New view for Orders are nearly the same, content-wise, we created
+a MVC partial view which contains the markup that is shared between the views. This partial view
 can be found in **Views/Order/_Order.cshtml**.
 
 ### Setting up the basic Order fields
 
 ![kendo-saleshub-order-info-screenshot](images/kendo-saleshub-order-info-screenshot.png)
 
-The first part of the form is were we declare the fields where the user can set the contract weight/amount,
+The first part of the form is where we declare the fields where the user can set the contract weight/amount,
 date, and the order number for the given order. For the sake of brevity, we'll only cover the fields which
 use Kendo UI widgets.
 
@@ -38,11 +38,11 @@ property of an Order. The numeric textbox is setup to only support two decimal p
 which is greater than or equal to one.
 
 The `Deferred()` call makes the Kendo UI MVC extensions wait on injecting the necessary Javascript into the page
-in order to setup the widget. The normal workflow for the extensions is that they will automatically insert
+in order to setup the widget. The normal workflow for the extensions is automatically inserting
 a &lt;script&gt; tag, which contains the javascript needed to setup the element as a Kendo widget, right after the
 element you want to be a Kendo widget. Deferring the creation of this script tag means that you're in charge of telling
 the extensions when it should generate the Javascript for the deferred widgets. To make the extensions generate the
-Javascript for the deferred widgets you have to call `@Html.Kendo().DeferredScripts()`. The standard convention for
+Javascript for the deferred widgets, you have to call `@Html.Kendo().DeferredScripts()`. The standard convention for
 &lt;script&gt; tags is to add them at the end of the &lt;body&gt;, so this is the recommended place for calling the
 `DeferredScripts` function.
 
@@ -52,7 +52,7 @@ Javascript for the deferred widgets you have to call `@Html.Kendo().DeferredScri
         @Html.ValidationMessageFor(m => m.OrderDate)
     </div>
 
-Here we setup a [Kendo DatePicker](http://demos.kendoui.com/web/datepicker/index.html) for the OrderDate of an Order.
+Here we set up a [Kendo DatePicker](http://demos.kendoui.com/web/datepicker/index.html) for the OrderDate of an Order.
 
     <div>
         @Html.LabelFor(m => m.CurrencyTypeId, "Invoicing Currency:")
@@ -123,7 +123,7 @@ that we declared just above.
 Order details represent the line items for each Order. The total amount/weight of all of the Order details for an Order should be equal
 to the Contract weight/amount of an Order. The Order details grid allows a user to create/edit Order details using the "PopUp" editor
 mode for a [Kendo Grid](http://demos.kendoui.com/web/grid/index.html). The following snippets will only cover how the Order details grid
-is created using the extensions. If you would like to read more on how the "PopUp" editor is configured for the grid please read,
+is created using the extensions. If you would like to read more on how the "PopUp" editor is configured for the grid, please read
 [Creating and Editing Order Details](kendo-saleshub-creating-editing-order-details).
 
     @(Html.Kendo().Grid<OrderDetailViewModel>()
@@ -160,7 +160,7 @@ is created using the extensions. If you would like to read more on how the "PopU
             .Aggregates(a => a.Add(x => x.TotalAmount).Sum())
         ).Deferred())
 
-Lets step through this grid declaration and see what each part does.
+Let's step through this grid declaration and see what each part does.
 
     @(Html.Kendo().Grid<OrderDetailViewModel>()
         .Name("orderDetailsGrid")
@@ -179,14 +179,14 @@ the extensions that the grid will be bound against **OrderDetailViewModel**'s.
         columns.Command(command => { command.Edit(); command.Destroy(); });
     })
 
-Here we setup each column for the Grid. Calling `Filterable(false)` allows you selective choose when a column cannot be filtered by the user.
+Here we set up each column for the Grid. Calling `Filterable(false)` allows you selective choose when a column cannot be filtered by the user.
 
 Calling `ClientFooterTemplate` allows you to specify a footer which is displayed for the specified column. In our case these footer templates
-make use of the [DataSource aggregates](/api/framework/datasource#configuration-aggregate) that we setup, later on, in our DataSource. As the
+make use of the [DataSource aggregates](/api/framework/datasource#configuration-aggregate) that we set up, later on, in our DataSource. As the
 client footer templates are bound client-side we use [Kendo's templating syntax](/api/framework/kendo#methods-template) to tell it which aggregate
 to display the result of (in our case we only bind against a **sum** aggregate).
 
-The last column is a command column and we use the Grid's builtin **Edit** and **Destroy** commands.
+The last column is a command column and we use the Grid's built-in **Edit** and **Destroy** commands.
 
     .Filterable()
     .ToolBar(toolbar => toolbar.Create())
@@ -196,7 +196,7 @@ The last column is a command column and we use the Grid's builtin **Edit** and *
 
 Next we specify that the grid is filterable and we have the grid add a "Create new item" to the Toolbar. We also tell the grid to run in **PopUp**
 edit mode and that the user can select a whole row at a time. Lastly, we subscribe to the **Save** event of the grid. We do this because the
-**TotalAmount** for an OrderDetailViewModel is a computed property and we need to update it anytime the user updates the order detail.
+**TotalAmount** for an OrderDetailViewModel is a computed property and we need to update it any time the user updates the order detail.
 
 The event handler for this very simple:
 
@@ -204,7 +204,7 @@ The event handler for this very simple:
         e.model.set("TotalAmount", e.model.Units * e.model.PricePerUnitOfWeight);
     };
 
-When the user updates an order detail we find the order detail which was modified by accessing the **model** property on the event object
+When the user updates an order detail, we find the modified order detail by accessing the **model** property on the event object
 that our handler receives. Using this, we **set** the new value of **TotalAmount** based on the new values of the **Units** and **PricePerUnitOfWeight**
 properties.
 
@@ -229,17 +229,17 @@ be updated.
         .Aggregates(a => a.Add(x => x.TotalAmount).Sum())
     )
 
-Now we setup the [Kendo DataSource](http://demos.kendoui.com/web/datasource/index.html) for the Grid. As we're going to be
+Now we set up the [Kendo DataSource](http://demos.kendoui.com/web/datasource/index.html) for the Grid. As we're going to be
 using a remote data service, we need to call `Ajax()` first.
 
     .Read(builder => builder.Url("/api/CustomerOrderDetails/GetOrderDetails/" + Model.OrderId).Type(HttpVerbs.Get))
     .Create(builder => builder.Url("/api/CustomerOrderDetails/CreateOrderDetail/" + Model.OrderId).Type(HttpVerbs.Put))
     .Update(builder => builder.Url("/api/CustomerOrderDetails/UpdateOrderDetail").Type(HttpVerbs.Post))
     .Destroy(builder => builder.Url("/api/CustomerOrderDetails/DeleteOrderDetail").Type(HttpVerbs.Delete))
-
-Next we setup where and how the DataSource performs its actions against the remote data service. For the **Read** and **Create**
-methods we inject the **OrderId** into the URL as a path parmater. This is so our data service knows which order details to retrieve
-and so it knows which order the new order detail will apply to. The data service also follows the HTTP Verb conventions of a RESTful serivce,
+*HERE*
+Next we set up where and how the DataSource performs its actions against the remote data service. For the **Read** and **Create**
+methods we inject the **OrderId** into the URL as a path parameter. This is so our data service knows which order details to retrieve
+and so it knows which order the new order detail will apply to. The data service also follows the HTTP Verb conventions of a RESTful service,
 so we change what HTTP verb that datasource should use depending on which CRUD operation it's performing.
 
     .Model(model => {
@@ -247,20 +247,20 @@ so we change what HTTP verb that datasource should use depending on which CRUD o
         model.Field(m => m.OrderDetailId).DefaultValue(0);
     })
 
-Here we tell the datasource which property is the Id for the data it receives from the server, we also tell it what the default
+Here we tell the datasource which property is the Id for the data it receives from the server. We also tell it what the default
 value for that field is.
 
     .Events(events =>  events.Error("window.SalesHub.OrderDetails_Error"))
 
 We also subscribe to the Error event of the datasource. This is so we can handle server-side validation errors when creating/editing
-order details. If you would like to read more on how this works please read the [Creating and Editing Order Details](kendo-saleshub-creating-editing-order-details)
+order details. If you would like to read more on how this works, please read the [Creating and Editing Order Details](kendo-saleshub-creating-editing-order-details)
 article.
 
     .Aggregates(a => a.Add(x => x.Units).Sum())
     .Aggregates(a => a.Add(x => x.NetWeight).Sum())
     .Aggregates(a => a.Add(x => x.TotalAmount).Sum())
 
-Finally we setup some aggregates for a few of the properties on the model. Adding aggregates works by calling `Add()` and specifying a property on the model that the
+Finally we set up some aggregates for a few of the properties on the model. Adding aggregates works by calling `Add()` and specifying a property on the model that the
 grid is being bound against. After you **Add** an aggregate for a property you can then specify the type(s) of the aggregate which can be **Sum**, **Count**, **Min**,
 **Max**, or **Average**. We use these aggregates in the footer templates for each of these that are bound to these properties.
 
@@ -288,9 +288,9 @@ grid is being bound against. After you **Add** an aggregate for a property you c
             .ServerOperation(false)
         ).Deferred())
 
-Setting up the Order notes grid is somewhat similar to how we setup the order details grid. Since we're display a DateTime to the user, we specify
+Setting up the Order notes grid is somewhat similar to how we set up the order details grid. Since we're display a DateTime to the user, we specify
 a ClientTemplate for the **PostedDate** column which makes use of Kendo UI's [date formatting](/getting-started/framework/globalization/dateformatting)
-capabilites. Another difference is that we only support viewing and creating order notes, so we only provide **Read** and **Create** URLs for the
+capabilities. Another difference is that we only support viewing and creating order notes, so we only provide **Read** and **Create** URLs for the
 datasource.
 
 ## Setting up the Panel Bar
@@ -312,9 +312,9 @@ the fields for editing the payment terms of an Order, along with setting invoice
     </ul>
     @Html.Kendo().PanelBar().Name("panelBar").Deferred()
 
-We setup the PanelBar by declaring its HTML structure and then telling the extensions to create a PanelBar around it. The PanelBar expects the HTML element it works
+We set up the PanelBar by declaring its HTML structure and then telling the extensions to create a PanelBar around it. The PanelBar expects the HTML element it works
 against to be a &lt;ul&gt;. Where each &lt;li&gt; is a section in the PanelBar and the first text element that appears it the title for that section. So in our case
-"Payment Terms" and "Comments" will be the titles for each PanelBar section. Any element that appears after the title will be including in the contents of that section.
+"Payment Terms" and "Comments" will be the titles for each PanelBar section. Any element that appears after the title will be included in the contents of that section.
 
 ### Setting up the Payment Terms Section
 
@@ -374,7 +374,7 @@ with a property name of **class** and a value of **k-textbox**.
         </div>
     </div>
 
-The payment terms view mostly consists of [Kendo DropDown List's](http://demos.kendoui.com/web/dropdownlist/index.html) along with a
+The Payment Terms view mostly consists of [Kendo DropDown List's](http://demos.kendoui.com/web/dropdownlist/index.html) along with a
 [Kendo NumericTextBox](http://demos.kendoui.com/web/numerictextbox/index.html). The DropDown List's are generated server-side using the
 `BindTo` function and we set the selected index by calling the `SelectedIndex` function. To find which item in each dropdown that needs to be
 selected when the page loads we use the `FindSelected`, which is provided by MVC. This function runs against an Enumerable of SelectListItems
@@ -419,8 +419,8 @@ The event handler for the change event, which can be found in **Scripts/order.js
 
 We first get the selected item in the grid by using the `select()` function on the grid (which is the **this** context in our event handler). Since
 the `select` function returns an array of selected elements we index into it to get the first selected element. Since we bound the grid server-side,
-the grid on the client-side doesn't actually have any `dataItem`'s that we can access. This means we have to find the text of the suggested value by
-using jQuery to find the &lt;td&gt; that has the text we need. Once we assign the text we found to the value of the payment terms override textarea. After
+the grid on the client-side doesn't actually have any `dataItem`s that we can access. This means we have to find the text of the suggested value by
+using jQuery to find the &lt;td&gt; that has the text we need. Once this is done, we assign the text we found to the value of the payment terms override textarea. After
 setting the value, we find the suggested values window, using jQuery, and close it.
 
 ### Setting up the Comments Section
@@ -445,4 +445,4 @@ setting the value, we find the suggested values window, using jQuery, and close 
         </div>
     </div>
 
-The comments section is small and simple and just contains four standard HTML textarea's.
+The comments section is small and simple and contains four standard HTML textarea's.
