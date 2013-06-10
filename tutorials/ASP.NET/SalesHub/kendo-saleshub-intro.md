@@ -37,10 +37,10 @@ If you have a license for the Kendo UI MVC extensions, you can use the [Telerik 
 to download and install the extensions. If you haven't purchased a license yet, you can download and install the 30 day [free trial](http://www.kendoui.com/download.aspx)
 for the extensions.
 
-Once you've downloaded and installed the extensions, all that is required is for **`\wrappers\aspnetmvc\Binaries\Mvc3\Kendo.Mvc.dll`** to be copied from the installation
-directory of the Kendo UI MVC extensions into the **`SalesHub\libs`** directory.
+Once you've downloaded and installed the extensions, all that is required is for `\wrappers\aspnetmvc\Binaries\Mvc3\Kendo.Mvc.dll` to be copied from the installation
+directory of the Kendo UI MVC extensions into the `SalesHub\libs` directory.
 
-> The standard installation directory for the extensions is **`c:\Program Files (x86)\Telerik\Kendo UI for ASP.NET MVC &lt;version&gt;`**.
+> The standard installation directory for the extensions is **`c:\Program Files (x86)\Telerik\Kendo UI for ASP.NET MVC <version>`**.
 
 ## Building and Running the Application
 
@@ -57,9 +57,9 @@ The first time the application launches, it creates and seeds its database.
 There are three main projects in this sample application. They are:
 
 1. **SalesHub.Client**:
-	
+
 	This is a standard MVC project and uses the default MVC project structure with one exception. The data services, which
-	are MVC controllers that return JSON results, are in their own namespace **SalesHub.Client.Api**, so as to avoid confusion
+	are MVC controllers that return JSON results, are in their own namespace (**SalesHub.Client.Api**), so as to avoid confusion
 	with which controllers return Views and which ones return JSON.
 
 2. **SalesHub.Data**:

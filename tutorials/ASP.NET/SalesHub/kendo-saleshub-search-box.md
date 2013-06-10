@@ -49,7 +49,7 @@ have been typed into the textbox.
         .ServerFiltering(true)
     )
 
-We set up the DataSource for the AutoComplete to call our search method on the **SearchController** and we tell it do server-side
+We set up the DataSource for the AutoComplete to call our search method on the **SearchController** and we tell it to do server-side
 filtering when it queries for data.
 
     .DataTextField("OrderNumber")
@@ -68,7 +68,7 @@ You can find the full markup for the search AutoComplete in **Views/Shared/_Layo
 
 Because we want to redirect the user to the edit page for the order that they select, we need to create an event handler for
 the `select` event of the AutoComplete. Since we'll be redirecting the user to a different page client-side, we also need a way
-of passing the correct URL to our Javascript. To do this we inject the correct URL, using Razor, in **Views/Shared/_Layout.cshtml**.
+of passing the correct URL to our JavaScript. To do this we inject the correct URL, using Razor, in **Views/Shared/_Layout.cshtml**.
 
     <script>
         window.SalesHub.Search = {
@@ -87,8 +87,8 @@ Now that we have the URL we need, we can declare our event handler.
     };
 
 Our event handler takes one parameter (`e`) which is an event object that the AutoComplete passes in. This event object has a
-property called `item`, which is a jQuery object that points to the HTML element that the user selected. We use this to find the 
-&lt;span&gt; that we specified in our Template for the AutoComplete and from there we get the "OrderId" off of the **data-order-id**
+property called `item`, which is a jQuery object that points to the HTML element that the user selected. We use this to find the
+`<span>` that we specified in our Template for the AutoComplete and from there we get the "OrderId" off of the **data-order-id**
 attribute we declared on the span.
 
 This event handler can be found in **Scripts/search.js**.
@@ -125,8 +125,7 @@ To do this we create a [Kendo Window](http://demos.kendoui.com/web/window/index.
         </text>)
         .Events(e => e.Open("window.SalesHub.SearchResultWindow_Open")))
 
-In addition to the standard boilerplate declarations for a Kendo widget using the Kendo UI MVC extensions, let's break down
-what this window declaration does.
+Let's break down what this window declaration does.
 
     .Title("Search Results")
     .Modal(true)
@@ -156,7 +155,7 @@ the page first loads. We also specify the dimensions of the window.
     </text>)
 
 Here we declare the contents of our window. Since we want a [Kendo Grid](http://demos.kendoui.com/web/grid/index.html)
-inside of our window to display the search results, we use Razor's @&lt;text&gt; syntax to declare our grid. We also
+inside of our window to display the search results, we use Razor's `@<text>` syntax to declare our grid. We also
 subscribe to the `change` event of a the grid. The `change` event is fired when a user selects an item in the grid.
 This will be useful later when we need to redirect the user to the order that they select.
 
@@ -209,8 +208,8 @@ of the grid comes into play.
     };
 
 The grid sets the `this` context of the function to itself when it calls our event handler. This means that we can access all of
-the grids properties through the `this` variable. To get the selected item in the grid, we call the `select` function on it. The
+the grid's properties through the `this` variable. To get the selected item in the grid, we call the `select` function on it. The
 `select` function returns an array of selected elements, but since our grid only supports single item selection we just get the
 first element in the array. We then pass the selected element to the `dataItem` function of the grid, which returns the corresponding
-**OrderSearchResult** which we use to get the id of the order. Once we have the id of the order we can redirect the user to
+**OrderSearchResult** which we use to get the id of the order. Once we have the **id** of the order we can redirect the user to
 the edit page for that order.

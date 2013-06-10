@@ -5,9 +5,9 @@ tags: Tutorial
 publish: true
 ---
 
-# Filtering Order's Server-Side - SalesHub
+# Filtering Orders Server-Side - SalesHub
 
-![kendo-saleshub-customer-treeview-and-grid-screenshot](images/kendo-saleshub-customer-treeview-and-grid-screenshot.png)
+![kendo-saleshub-customer-TreeView-and-grid-screenshot](images/kendo-saleshub-customer-TreeView-and-grid-screenshot.png)
 
 Since **SalesHub** contains a lot of orders for various customers, it would not be very efficient for **all**
 of the orders to be returned when the orders grid renders. To reduce wait times and cut back on the amount of bandwidth
@@ -82,7 +82,7 @@ to help with server-side filtering. Let's look at code in the **Api/CustomerOrde
     }
 
 As you can see, the implementation for the CustomerOrdersController isn't very big and this is because the Kendo UI MVC extensions
-greatly reduce the amount of code you have to write to support filtering. Lets step through this code and see what everything does.
+greatly reduce the amount of code you have to write to support filtering. Let's step through this code and see what everything does.
 
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
@@ -122,13 +122,13 @@ Queryable of orders based on the DataSourceRequest that we got from DataSource.
 **ToDataSourceResult** also provides an overload that allows you to specify a selector function. This selector function is the same as what you would
 pass to the standard `Select` LINQ function. In our case we convert each Order to a CustomerOrderViewModel before we return it to the client.
 
-The **DataSourceResult** that we get from calling `ToDataSourceResult` has the filtered list of Order's, which we can now return to the client by
+The **DataSourceResult** that we get from calling `ToDataSourceResult` has the filtered list of Orders, which we can now return to the client by
 calling the `Json` function and passing in the response.
 
 ## Filtering Orders by Customer
 
-Since we only want to display orders for the currently selected Customer in the Treeview we had to write some custom Javascript to handle this.
-The Javascript we wrote simply listens to the `select` event of the Customer treeview and updates the filters on the DataSource that the orders
+Since we only want to display orders for the currently selected Customer in the TreeView we had to write some custom JavaScript to handle this.
+The JavaScript we wrote simply listens to the `select` event of the Customer TreeView and updates the filters on the DataSource that the orders
 grid is using.
 
 The following code snippets can be found in **Scripts/home.js**.
@@ -148,7 +148,7 @@ The following code snippets can be found in **Scripts/home.js**.
         }
     };
 
-If you remember how we [setup the Customer treeview](kendo-saleshub-customer-treeview) we specified a `select` event handler for it. This
+If you remember how we [setup the Customer TreeView](kendo-saleshub-customer-TreeView) we specified a `select` event handler for it. This
 is where we declare that event handler (`window.SalesHub.CustomerTreeView_Select`).
 
     window.SalesHub.CustomerTreeView_Select = function (e) {
@@ -160,8 +160,8 @@ is where we declare that event handler (`window.SalesHub.CustomerTreeView_Select
         }
     };
 
-The event handler has one paramater `e`. This is the event object that we get from the Kendo
-Treeview when a new node is selected in it; it contains information about which node was
+The event handler has one parameter `e`. This is the event object that we get from the Kendo
+TreeView when a new node is selected in it; it contains information about which node was
 selected.
 
     var node = $(e.node);
@@ -171,7 +171,7 @@ The first part of our event handler interacts with the `node` property on the ev
 The `node` property is the element the DOM that was selected. So the first thing we do is convert
 the DOM object into a jQuery object and the next thing we do is get the corresponding `dataItem` for that node.
 
-The `dataItem` we get from the Kendo Treeview is an object that the Kendo Treeview uses to describe each node in the tree.
+The `dataItem` we get from the Kendo TreeView is an object that the Kendo TreeView uses to describe each node in the tree.
 
     if (!dataItem.hasChildren) {
         updateGridCustomerFilter(node.data("customer-id"));
@@ -184,7 +184,7 @@ that means a Customer was selected.
 
 We then call the `updateGridCustomerFilter` function, this takes a customerId as a parameter.
 Since we added a the **data-customer-id** attribute to all of the Customer nodes when we
-generated the Treeview server-side, we just retrieve that value from the jQuery object
+generated the TreeView server-side, we just retrieve that value from the jQuery object
 by calling the `data` function on it.
 
 Let's talk about the function which is in charge of updating the filters on the grid:

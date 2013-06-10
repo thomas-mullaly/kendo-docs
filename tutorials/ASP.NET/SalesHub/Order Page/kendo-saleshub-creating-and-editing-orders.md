@@ -34,16 +34,16 @@ use Kendo UI widgets.
     </div>
 
 Here we create a [Kendo NumericTextBox](http://demos.kendoui.com/web/numerictextbox/index.html) for the ContractWeight
-property of an Order. The numeric textbox is setup to only support two decimal places and the user must enter a value
+property of an Order. The numeric textbox is set up to only support two decimal places and the user must enter a value
 which is greater than or equal to one.
 
-The `Deferred()` call makes the Kendo UI MVC extensions wait on injecting the necessary Javascript into the page
+The `Deferred()` call makes the Kendo UI MVC extensions wait on injecting the necessary JavaScript into the page
 in order to setup the widget. The normal workflow for the extensions is automatically inserting
-a &lt;script&gt; tag, which contains the javascript needed to setup the element as a Kendo widget, right after the
+a `<script>` tag, which contains the JavaScript needed to setup the element as a Kendo widget, right after the
 element you want to be a Kendo widget. Deferring the creation of this script tag means that you're in charge of telling
-the extensions when it should generate the Javascript for the deferred widgets. To make the extensions generate the
-Javascript for the deferred widgets, you have to call `@Html.Kendo().DeferredScripts()`. The standard convention for
-&lt;script&gt; tags is to add them at the end of the &lt;body&gt;, so this is the recommended place for calling the
+the extensions when it should generate the JavaScript for the deferred widgets. To make the extensions generate the
+JavaScript for the deferred widgets, you have to call `@Html.Kendo().DeferredScripts()`. The standard convention for
+`<script>` tags is to add them at the end of the `<body>`, so this is the recommended place for calling the
 `DeferredScripts` function.
 
     <div>
@@ -61,7 +61,7 @@ Here we set up a [Kendo DatePicker](http://demos.kendoui.com/web/datepicker/inde
 
 To create the currency dropdown we use a [Kendo DropDownList](http://demos.kendoui.com/web/dropdownlist/index.html),
 which we bind to server-side using the the `BindTo` function. The `BindTo` function takes `IEnumerable<SelectListItem>`
-as a parameter and will cause the extensions to generate the markup for the underlying &lt;select&gt; server-side.
+as a parameter and will cause the extensions to generate the markup for the underlying `<select>` server-side.
 
 ### Setting up the TabStrip
 
@@ -93,8 +93,8 @@ when we're creating one.
     @Html.Kendo().TabStrip().Name("detailLinesTabStrip").Deferred()
 
 To setup the [Kendo TabStrip](http://demos.kendoui.com/web/tabstrip/index.html) we first have to write some basic HTML markup
-that tells the tabstrip what its tabs are and what content goes into each tab. To do this we declare a &lt;ul&gt; as the first
-child element of the &lt;div&gt; that we would like to be a tabstrip.
+that tells the tabstrip what its tabs are and what content goes into each tab. To do this we declare a `<ul>` as the first
+child element of the `<div>` that we would like to be a tabstrip.
 
     <ul>
         <li class="k-state-active">Details</li>
@@ -106,8 +106,8 @@ tells the tabstrip that that is the tab that you would like it to have selected 
 
 > If you don't specify a default selected tab, then no tab will be selected when the page loads.
 
-Next we have to declare the contents for each tab. This is done by adding &lt;div&gt;'s with the content you would like in each tab,
-after the &lt;ul&gt;. The ordering of these &lt;div&gt;'s is important, as the tabstrip will render them as content for tabs in the
+Next we have to declare the contents for each tab. This is done by adding `<div>`'s with the content you would like in each tab,
+after the `<ul>`. The ordering of these `<div>`'s is important, as the tabstrip will render them as content for tabs in the
 same order that the tabs appear.
 
 Now that we've declared the markup for our tabstrip we can turn it into one.
@@ -179,7 +179,7 @@ the extensions that the grid will be bound against **OrderDetailViewModel**'s.
         columns.Command(command => { command.Edit(); command.Destroy(); });
     })
 
-Here we set up each column for the Grid. Calling `Filterable(false)` allows you selective choose when a column cannot be filtered by the user.
+Here we set up each column for the Grid. Calling `Filterable(false)` allows you to selectively choose when a column cannot be filtered by the user.
 
 Calling `ClientFooterTemplate` allows you to specify a footer which is displayed for the specified column. In our case these footer templates
 make use of the [DataSource aggregates](/api/framework/datasource#configuration-aggregate) that we set up, later on, in our DataSource. As the
@@ -236,7 +236,7 @@ using a remote data service, we need to call `Ajax()` first.
     .Create(builder => builder.Url("/api/CustomerOrderDetails/CreateOrderDetail/" + Model.OrderId).Type(HttpVerbs.Put))
     .Update(builder => builder.Url("/api/CustomerOrderDetails/UpdateOrderDetail").Type(HttpVerbs.Post))
     .Destroy(builder => builder.Url("/api/CustomerOrderDetails/DeleteOrderDetail").Type(HttpVerbs.Delete))
-*HERE*
+
 Next we set up where and how the DataSource performs its actions against the remote data service. For the **Read** and **Create**
 methods we inject the **OrderId** into the URL as a path parameter. This is so our data service knows which order details to retrieve
 and so it knows which order the new order detail will apply to. The data service also follows the HTTP Verb conventions of a RESTful service,
@@ -313,7 +313,7 @@ the fields for editing the payment terms of an Order, along with setting invoice
     @Html.Kendo().PanelBar().Name("panelBar").Deferred()
 
 We set up the PanelBar by declaring its HTML structure and then telling the extensions to create a PanelBar around it. The PanelBar expects the HTML element it works
-against to be a &lt;ul&gt;. Where each &lt;li&gt; is a section in the PanelBar and the first text element that appears it the title for that section. So in our case
+against to be a `<ul>`. Where each `<li>` is a section in the PanelBar and the first text element that appears it the title for that section. So in our case
 "Payment Terms" and "Comments" will be the titles for each PanelBar section. Any element that appears after the title will be included in the contents of that section.
 
 ### Setting up the Payment Terms Section
@@ -350,8 +350,8 @@ against to be a &lt;ul&gt;. Where each &lt;li&gt; is a section in the PanelBar a
 To prevent having duplicate HTML markup in the payment terms section there's a Partial view which we render for each payment term that is on an Order. This
 partial view can be found in **Views/Order/_OrderPaymentTerm.cshtml**.
 
-> Since standard HTML textboxes do no look like the Kendo UI text widgets it throws off the uniform look and feel widgets on your page. To fix this
-you can add the **k-textbox** class to a standard HTML text field and this will give it some of the textbox styles that kendo applies to its widgets.
+> Since standard HTML textboxes do not look like the Kendo UI text widgets it throws off the uniform look and feel widgets on your page. To fix this
+you can add the **k-textbox** class to a standard HTML text field and this will give it some of the textbox styles that Kendo UI applies to its widgets.
 This can be done using MVC by specifying an additional parameter to the text widget you're creating with the MVC HtmlHelper, which is an anonymous object
 with a property name of **class** and a value of **k-textbox**.
 
@@ -374,12 +374,11 @@ with a property name of **class** and a value of **k-textbox**.
         </div>
     </div>
 
-The Payment Terms view mostly consists of [Kendo DropDown List's](http://demos.kendoui.com/web/dropdownlist/index.html) along with a
-[Kendo NumericTextBox](http://demos.kendoui.com/web/numerictextbox/index.html). The DropDown List's are generated server-side using the
-`BindTo` function and we set the selected index by calling the `SelectedIndex` function. To find which item in each dropdown that needs to be
-selected when the page loads we use the `FindSelected`, which is provided by MVC. This function runs against an Enumerable of SelectListItems
-and finds which SelectListItem has its **Selected** property set to true by using the MVC extension method **FindSelected**, which finds and
-returns the index of the SelectListItem that has its **Selected** property set to true.
+The Payment Terms view mostly consists of [Kendo DropDownLists](http://demos.kendoui.com/web/dropdownlist/index.html) along with a
+[Kendo NumericTextBox](http://demos.kendoui.com/web/numerictextbox/index.html). The DropDownLists are generated server-side using the
+`BindTo` function and we set the selected index by calling the `SelectedIndex` function. To find which item in each dropdown needs to be
+selected when the page loads, we use the `FindSelected`, which is provided by MVC. This function runs against an Enumerable of SelectListItems
+and finds which SelectListItem has its **Selected** property set to true.
 
 The last part of the Payment terms section is the Payment terms override textarea and the "Suggested Values" window and grid.
 
@@ -404,7 +403,7 @@ The last part of the Payment terms section is the Payment terms override textare
                 .Events(events => events.Change("window.SalesHub.SuggestedValuesGrid_Changed")))
         </text>))
 
-We setup the Suggested Values window to be modal and to have a width of 600px. The contents of the window is a [Kendo Grid](http://demos.kendoui.com/web/grid/index.html)
+We set up the Suggested Values window to be modal and to have a width of 600px. The contents of the window is a [Kendo Grid](http://demos.kendoui.com/web/grid/index.html)
 which displays a list of suggested values that the user can select from. When the user selects a value from the grid, that value is copied into the payment terms override
 textarea and the window is closed. In order to know when the user selects a value, we listen to the `Change` event of the Grid.
 
@@ -420,7 +419,7 @@ The event handler for the change event, which can be found in **Scripts/order.js
 We first get the selected item in the grid by using the `select()` function on the grid (which is the **this** context in our event handler). Since
 the `select` function returns an array of selected elements we index into it to get the first selected element. Since we bound the grid server-side,
 the grid on the client-side doesn't actually have any `dataItem`s that we can access. This means we have to find the text of the suggested value by
-using jQuery to find the &lt;td&gt; that has the text we need. Once this is done, we assign the text we found to the value of the payment terms override textarea. After
+using jQuery to find the `<td>` that has the text we need. Once this is done, we assign the text we found to the value of the payment terms override textarea. After
 setting the value, we find the suggested values window, using jQuery, and close it.
 
 ### Setting up the Comments Section
@@ -445,4 +444,4 @@ setting the value, we find the suggested values window, using jQuery, and close 
         </div>
     </div>
 
-The comments section is small and simple and contains four standard HTML textarea's.
+The comments section is small and simple and contains four standard HTML textareas.

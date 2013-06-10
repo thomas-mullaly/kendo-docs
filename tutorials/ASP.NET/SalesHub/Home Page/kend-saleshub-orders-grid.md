@@ -9,7 +9,7 @@ publish: true
 
 ![kendo-saleshub-orders-grid-screenshot](images/kendo-saleshub-orders-grid-screenshot.png)
 
-In this section we'll show you how the Orders grid is setup using the Kendo UI MVC Extensions.
+In this section we'll show you how the Orders grid is set up using the Kendo UI MVC Extensions.
 
 The Orders grid can be found in **Views/Home/Index.cshtml**
 
@@ -40,7 +40,7 @@ For some fields we also want to format the values a little before we display the
 That's where the `Format` function comes in handy. The `Format` function takes a string that
 contains [Kendo's formatting syntax](/api/framework/kendo#methods-format).
 
-The last column of the Grid works a little differently than the other columns. This is because 
+The last column of the Grid works a little differently than the other columns. This is because
 we're not actually displaying information from a property on the **CustomerOrderViewModel**. The
 last column contains a link which will redirect the user to a page where they can edit the order.
 
@@ -49,14 +49,14 @@ last column contains a link which will redirect the user to a page where they ca
 
 Since the Grid will be bound client-side, we can't specify a template for the column using the
 `Template` function. Instead we have to call the `ClientTemplate` function which allows us to
-specify a Kendo Template. In our case we generate an &lt;a&gt; with an **href** that links to
+specify a Kendo Template. In our case we generate an `<a>` with an **href** that links to
 the edit page and contains the Id of the order to edit.
 
         .ToolBar(toolbar => toolbar.Template("<a id='createOrderButton' class='k-button k-button-icontext k-grid-add' href='#'>Create order</a>"))
 
-Next we supply a template for the Toolbar of the grid. This template contains an &lt;a&gt; that
-is used to redirect the user to the page for creating an order. This is handled by some custom Javascript which can be found in **Scripts/home.js**.
-This Javascript will be described later in this article.
+Next we supply a template for the Toolbar of the grid. This template contains an `<a>` that
+is used to redirect the user to the page for creating an order. This is handled by some custom JavaScript which can be found in **Scripts/home.js**.
+This JavaScript will be described later in this article.
 
         .Filterable()
         .Selectable(settings => settings.Mode(GridSelectionMode.Single))
@@ -84,14 +84,14 @@ Earlier we set up the "Create an Order" button in the Grids toolbar, but it does
 anything. So let's wire that up to do something useful.
 
 Since we'll be redirecting the user page for creating an Order, we'll need the URL to that page. We
-don't want to hardcode the URL to that page in our Javascript, since it could change later, so lets
-inject the URL we need into a Javascript variable using Razor. This can be found in **Views/Home/Index.cshtml**.
+don't want to hardcode the URL to that page in our JavaScript, since it could change later, so let's
+inject the URL we need into a JavaScript variable using Razor. This can be found in **Views/Home/Index.cshtml**.
 
     <script>
         window.SalesHub.createOrderUrl = "@Url.RouteUrl("Default", new { controller = "Order", action = "New" }, Request.Url.Scheme)";
     </script>
 
-Now that we have the URL in a variable that we can access from our Javascript function, we can
+Now that we have the URL in a variable that we can access from our JavaScript function, we can
 set up the code which actually redirects the user to that page when the "Create order" button
 is clicked.
 
@@ -101,4 +101,4 @@ is clicked.
 
 Here we use jQuery to find the button we created earlier in the toolbar and register a click
 event handler to it. When the button is clicked we access the URL that we stored earlier and
-concatenate the id of the currently selected Customer and set the result to the windows location.
+concatenate the id of the currently selected Customer and set the result to the window's location.

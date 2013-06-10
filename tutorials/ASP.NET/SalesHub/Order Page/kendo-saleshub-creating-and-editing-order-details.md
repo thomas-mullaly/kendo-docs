@@ -9,8 +9,6 @@ publish: true
 
 ![kendo-saleshub-order-details-edit-dialog-screenshot](images/kendo-saleshub-order-details-edit-dialog-screenshot.png)
 
-The Order Details grid provides
-
 ## How to Setup the Custom Order Detail Editor
 
 Since the MVC extensions for the [Kendo Grid](http://demos.kendoui.com/web/grid/index.html) make use of MVC's
@@ -20,7 +18,7 @@ set up the custom editor for the grid, we first have to create a partial Razor v
 we bound against the grid. If we look at how we set up the grid we can see how this works.
 
     @(Html.Kendo().Grid<OrderDetailViewModel>()
-        .Name("orderDetailsGrid")
+        .Name("orderDetailsGrid"))
 
 Since we declared the grid to bind against **OrderDetailViewModel**'s this means we need to a create a partial view
  called **OrderDetailViewModel.cshtml**. Once we've created this partial view it needs to be moved into the
@@ -40,8 +38,8 @@ for the view.
 
     <ul class="errors"></ul>
 
-Since we also want to display validation errors from the server, we add a &lt;ul&gt; with a **class** of "errors",
-which will be used by our custom client-side Javascript to display the errors that we got back from the server.
+Since we also want to display validation errors from the server, we add a `<ul>` with a **class** of "errors",
+which will be used by our custom client-side JavaScript to display the errors that we got back from the server.
 
     <div class="editor-label">
         @Html.LabelFor(model => model.Origin)
@@ -53,9 +51,9 @@ which will be used by our custom client-side Javascript to display the errors th
 
 Here we setup the [Kendo DropDownList](http://demos.kendoui.com/web/dropdownlist/index.html) for the **Origin**
 property. We're using its `BindTo` function against the **Origins** property in the **ViewData**. As we're not
-binding the dropdown list against **SelectListItem**'s, we have to tell it which property should be used as the
+binding the dropdown list against **SelectListItem**s, we have to tell it which property should be used as the
 text and which property should be used as the value. To do this we use the `DataTextField` and `DataValueField`
-functions. Lastly we specify the `OptionLabel` for the dropdown list, this is the text that is displayed when
+functions. Lastly we specify the `OptionLabel` for the dropdown list; this is the text that is displayed when
 no value from the dropdown has been selected.
 
 The reason we're getting the list of origins from the **ViewData** is because this partial view isn't being bound
@@ -68,10 +66,10 @@ lot of duplicate/unneeded data being sent back to the client. To avoid all of th
 
 ## Auto Updating Fields Based on Value Changes
 
-There are a couple properties on an order detail which are interrelated, and when one changes we need to update the
+There are a couple of properties on an order detail which are interrelated, and when one changes we need to update the
 others.
 
-The related fields are: 
+The related fields are:
 
 * **NetWeight** - When the net weight is changed, we update the units count.
 
@@ -107,7 +105,7 @@ After setting up the event handlers we need to actually handle the changes event
         orderDetails.set("NetWeight", orderDetails.UnitWeight * orderDetails.Units);
     };
 
-Each of the event handlers has the same basic set of operations--they find the order details grid on the
+Each of the event handlers has the same basic set of operations -- they find the order details grid on the
 page and get the **kendoGrid** object from it. Once they have the grid, they access the order detail which
 is currently being edited by the user. To do this easily we access the grid's **editable** property, which
 contains an **option** property that has the order detail which is currently being edited. After we get
@@ -168,7 +166,7 @@ back to client (if there are any errors in the **ModelState**).
 
 ![kendo-saleshub-order-details-errors](images/kendo-saleshub-order-details-errors.png)
 
-Using your browsers developer tools, you can see how `ToDataSourceResult` formats the errors in the
+Using your browser's developer tools, you can see how `ToDataSourceResult` formats the errors in the
 **ModelState** when it generates the response. The **Errors** property of the response contains the
 errors that were found in the **ModelState**. We can use these errors to display messages to user about
 what fields they need to change in order to update the object.
@@ -200,7 +198,7 @@ This template is used to display the errors from server. The template takes an o
 with two properties: **field** and **messages**. The **field** property is the name of the
 property on the **OrderDetailViewModel** that the errors apply to. The **messages** property
 contains all of the error messages associated with the property. All this template does is
-generate an &lt;li&gt; with the **field** as text and a nested &lt;ul&gt; that contains the
+generate an `<li>` with the **field** as text and a nested `<ul>` that contains the
 error messages for the **field**.
 
 Now let's see how the event handler is set up:
@@ -239,7 +237,7 @@ that we get as a parameter. To display the errors inside of the editor dialog we
 object. Using the **validationTemplate** function, we construct a new object which has the properties that
 the template uses.
 
-Using the rendered result of the template we find the &lt;ul class="errors"&gt; which is in the editor dialog and
+Using the rendered result of the template we find the `<ul class="errors">` which is in the editor dialog and
 append the result to it using jQuery. An easy way of finding the editor dialog in the DOM is use the **editable**
 property on the grid. The **editable** object has a property called **element** which is a jQuery object that
 points the dialog in the DOM.
