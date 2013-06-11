@@ -60,7 +60,7 @@ This JavaScript will be described later in this article.
 
         .Filterable()
         .Selectable(settings => settings.Mode(GridSelectionMode.Single))
-        .Pageable(builder => builder.PageSizes(new[] { 20, 30 }))
+        .Pageable(builder => builder.PageSizes(new[] { 10, 20 }))
 
 Here we tell the grid that columns can be filtered by the user. We also make it so that users can
 select an entire row, and we set up some page sizes that the user can select from.
@@ -70,7 +70,7 @@ select an entire row, and we set up some page sizes that the user can select fro
             .Read(builder => builder.Url("/api/CustomerOrders/GetOrdersForCustomer/").Type(HttpVerbs.Get))
             .Model(model => model.Id("OrderId"))
             .ServerOperation(true)
-            .PageSize(20)
+            .PageSize(10)
         ))
 
 Finally we set up the DataSource that the grid will use. We'll be getting our data from a remote
